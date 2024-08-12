@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-38#=(j=v0vrup92aky&8f9&7+(3t3khfdt)6p-$_hl-1d#*a0i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,6 +77,7 @@ WSGI_APPLICATION = "eventif.wsgi.application"
 default_dburl = str(BASE_DIR / 'db.sqlite3')
 
 DATABASES = {
+    "default": config('DATABASE_URL', default=default_dburl)
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
