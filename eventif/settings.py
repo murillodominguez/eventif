@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+from dj_database_url import parse as dburl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -74,14 +76,14 @@ WSGI_APPLICATION = "eventif.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-default_dburl = str(BASE_DIR / 'db.sqlite3')
+default_dburl = 'sqlite3:///' + str(BASE_DIR / 'db.sqlite3')
 
 DATABASES = {
-    "default": config('DATABASE_URL', default=default_dburl)
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": config('DATABASE_URL', default=default_dburl, cast=dburl)
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
 }
 
 
