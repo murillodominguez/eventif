@@ -74,6 +74,8 @@ WSGI_APPLICATION = "eventif.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+default_dburl = str(BASE_DIR / 'db.sqlite3')
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
