@@ -9,4 +9,4 @@ class HomeTest(TestCase):
         self.assertEqual(200, self.response.status_code)
 
     def test_template(self):
-        self.assertEqual(200, self.response.status_code)
+        self.assertTemplateUsed(self.response, 'index.html')
