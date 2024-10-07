@@ -3,6 +3,7 @@ from django.shortcuts import render
 from subscriptions.forms import SubscriptionForm
 from django.core import mail
 from django.template.loader import render_to_string
+from django.contrib import messages
 
 def subscribe(request):
     if request.method == 'POST':
@@ -12,6 +13,8 @@ def subscribe(request):
             body = render_to_string('subscriptions/subscription_email.txt', form.cleaned_data)
 
             email = mail.send_mail('Confirmação de inscrição!', body, 'contato@eventif.com.br', ['contato@eventif.com.br', form.cleaned_data['email']])
+
+            messages.success(request, 'Inscrição realizada com sucesso!')
             return HttpResponseRedirect('/inscricao/')
         else:
             return render(request, 'subscriptions/subscription_form.html', {'form': form})
