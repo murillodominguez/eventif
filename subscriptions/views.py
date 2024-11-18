@@ -15,7 +15,7 @@ def subscribe(request):
             email = mail.send_mail('Confirmação de inscrição!', body, 'contato@eventif.com.br', ['contato@eventif.com.br', form.cleaned_data['email']])
 
             messages.success(request, 'Inscrição realizada com sucesso!')
-            return HttpResponseRedirect('/inscricao/')
+            return HttpResponseRedirect('/inscricao/1/')
         else:
             return render(request, 'subscriptions/subscription_form.html', {'form': form})
     
