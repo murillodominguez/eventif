@@ -52,6 +52,7 @@ class SubscribePostInvalid(TestCase):
         self.resp = self.client.post('/inscricao/', {})
 
     def test_post(self):
+        self.assertRedirects(self.resp, '/inscricao/1/')
         self.assertEqual(200, self.resp.status_code)
 
     def test_template(self):
