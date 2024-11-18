@@ -1,5 +1,6 @@
 from django.test import TestCase
 from subscriptions.models import Subscription
+from datetime import datetime
 
 class SubscriptionModelTest(TestCase):
     def setUp(self):
@@ -11,8 +12,11 @@ class SubscriptionModelTest(TestCase):
         )
         self.obj.save()
 
-def test_create(self):
-    self.assertTrue(Subscription.objects.exists())
+    def test_create(self):
+        self.assertTrue(Subscription.objects.exists())
 
-def test_created_at(self):
-    self.assertIsInstance(self.obj.created_at, datetime)
+    def test_created_at(self):
+        self.assertIsInstance(self.obj.created_at, datetime)
+
+    def test_str(self):
+        self.assertEqual('Cleber Fonseca', str(self.obj))
