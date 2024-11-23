@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Olá! Tudo bem?
+
+Seja bem-vindo ao Eventif, seu contato será respondido em breve.
+
+Estes foram os dados que você enviou no envio de seu contato:
+
+Nome: {{ contact.name }}
+Email: {{ contact.email }}
+Phone: {{ contact.phone }}
+Mensagem: {{ contact.message }}
+
+Em até 48h úteis alguem da nossa equipe entrará
+em contato com você.
+
+Atenciosamente,
+Equipe EventIF
+{% endblock content %}

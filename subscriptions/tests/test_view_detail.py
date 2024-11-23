@@ -1,7 +1,6 @@
 from django.test import TestCase
 from subscriptions.models import Subscription
 
-
 class SubscriptionDetailGet(TestCase):
     def setUp(self):
         obj = Subscription.objects.create(

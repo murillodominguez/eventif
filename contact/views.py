@@ -26,11 +26,18 @@ def create(request):
     _send_mail(
     'contact/contact_email.txt',
     {'contact': contact},
-    'Confirmação de inscrição!',
+    'Novo contato recebido!',
     settings.DEFAULT_FROM_EMAIL,
     contact.email)
+    return HttpResponseRedirect('/contact/{}/'.format(contact.pk))
 
-    return HttpResponseRedirect('/inscricao/{}/'.format(contact.pk))
+def detail(request, pk):
+    try:
+        contact = Contact.objects.get(pk=pk)
+    except Contact.DoesNotExist:
+        raise Http404
+
+    return render(request, 'contact/contact_detail.html', {'contact': contact})
 
 def _send_mail(template_name, context, subject, from_, to):
     body = render_to_string(template_name, context)
