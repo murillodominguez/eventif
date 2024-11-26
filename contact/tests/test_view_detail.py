@@ -1,5 +1,6 @@
 from django.test import TestCase
 from contact.models import Contact
+from django.shortcuts import resolve_url as r
 
 class ContactDetailGet(TestCase):
     def setUp(self):
@@ -9,7 +10,7 @@ class ContactDetailGet(TestCase):
             phone='53-91234-5678',
             message='Olá, estou entrando em contato'
         )
-        self.resp = self.client.get('/contact/{}/'.format(obj.pk))
+        self.resp = self.client.get(r('contact:detail', obj.pk))
 
     def test_get(self):
         self.assertEqual(200, self.resp.status_code)
@@ -32,5 +33,5 @@ class ContactDetailGet(TestCase):
 
 class SubscriptionDetailNotFound(TestCase):
     def test_not_found(self):
-        resp = self.client.get('/contact/0/')
+        resp = self.client.get(r('contact:detail', 0))
         self.assertEqual(resp.status_code, 404)

@@ -2,10 +2,11 @@ from django.test import TestCase
 from django.core import mail
 from contact.forms import ContactForm
 from contact.models import Contact
+from django.shortcuts import resolve_url as r
 
 class ContactGet(TestCase):
     def setUp(self):
-        self.response = self.client.get('/contact/')
+        self.response = self.client.get(r('contact:new'))
 
     def test_get(self):
         self.assertEqual(200, self.response.status_code)
@@ -35,10 +36,10 @@ class ContactPostValid(TestCase):
     def setUp(self):
         data = dict(name="Cleber Fonseca",
                     email='profcleberfonseca@gmail.com', phone='53-12345-6789', message='Olá, estou entrando em contato')
-        self.resp = self.client.post('/contact/', data)
+        self.resp = self.client.post(r('contact:new'), data)
 
     def test_post(self):
-        self.assertRedirects(self.resp, '/contact/1/')
+        self.assertRedirects(self.resp, r('contact:detail', 1))
 
     def test_send_subscription_email(self):
         self.assertEqual(1, len(mail.outbox))
@@ -49,7 +50,7 @@ class ContactPostValid(TestCase):
 
 class SubscribePostInvalid(TestCase):
     def setUp(self):
-        self.resp = self.client.post('/contact/', {})
+        self.resp = self.client.post(r('contact:new'), {})
 
     def test_post(self):
         self.assertEqual(200, self.resp.status_code)

@@ -1,6 +1,7 @@
 from django.test import TestCase
-from subscriptions.models import Subscription
 from datetime import datetime
+from subscriptions.models import Subscription
+
 
 class SubscriptionModelTest(TestCase):
     def setUp(self):
@@ -20,3 +21,6 @@ class SubscriptionModelTest(TestCase):
 
     def test_str(self):
         self.assertEqual('Cleber Fonseca', str(self.obj))
+
+    def test_paid_default_False(self):
+        self.assertEqual(False, self.obj.paid)

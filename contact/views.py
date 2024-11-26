@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.shortcuts import render, resolve_url as r
+from django.http import HttpResponseRedirect, Http404
 from contact.forms import ContactForm
 from django.core import mail
 from django.template.loader import render_to_string
@@ -29,7 +29,7 @@ def create(request):
     'Novo contato recebido!',
     settings.DEFAULT_FROM_EMAIL,
     contact.email)
-    return HttpResponseRedirect('/contact/{}/'.format(contact.pk))
+    return HttpResponseRedirect(r('contact:detail',contact.pk))
 
 def detail(request, pk):
     try:
