@@ -27,8 +27,8 @@ def create(request):
     'contact/contact_email.txt',
     {'contact': contact},
     'Novo contato recebido!',
-    settings.DEFAULT_FROM_EMAIL,
-    contact.email)
+    contact.email,
+    settings.DEFAULT_FROM_EMAIL)
     return HttpResponseRedirect(r('contact:detail',contact.pk))
 
 def detail(request, pk):
