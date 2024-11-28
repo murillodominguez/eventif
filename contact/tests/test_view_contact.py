@@ -41,14 +41,14 @@ class ContactPostValid(TestCase):
     def test_post(self):
         self.assertRedirects(self.resp, r('contact:detail', 1))
 
-    def test_send_subscription_email(self):
+    def test_send_contact_email(self):
         self.assertEqual(1, len(mail.outbox))
 
-    def test_save_subscription(self):
+    def test_save_contact(self):
         self.assertTrue(Contact.objects.exists())
 
 
-class SubscribePostInvalid(TestCase):
+class ContactPostInvalid(TestCase):
     def setUp(self):
         self.resp = self.client.post(r('contact:new'), {})
 
@@ -67,5 +67,5 @@ class SubscribePostInvalid(TestCase):
         form = self.resp.context['form']
         self.assertTrue(form.errors)
 
-    def test_dont_save_subscription(self):
+    def test_dont_save_contact(self):
         self.assertFalse(Contact.objects.exists())

@@ -31,7 +31,7 @@ class ContactDetailGet(TestCase):
                 self.assertContains(self.resp, expected)
 
 
-class SubscriptionDetailNotFound(TestCase):
+class ContactDetailNotFound(TestCase):
     def test_not_found(self):
         resp = self.client.get(r('contact:detail', 0))
         self.assertEqual(resp.status_code, 404)
