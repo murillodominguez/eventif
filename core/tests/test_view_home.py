@@ -15,3 +15,14 @@ class HomeTest(TestCase):
     def test_link_subscription(self):
         self.assertContains(
             self.response, 'href="{}"'.format(r('subscriptions:new')))
+
+    def test_speakers(self):
+        contents = [
+            'Grace Hopper',
+            'https://abre.ai/hopper-pic',
+            'Alan Turing',
+            'https://abre.ai/turing-pic'
+        ]
+        for expected in contents:
+            with self.subTest():
+                self.assertContains(self.response, expected)
