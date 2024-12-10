@@ -16,4 +16,4 @@ class SpeakerModelAdmin(admin.ModelAdmin):
   
   photo_img.short_description = 'Foto'
 
-admin.site.register(Speaker)
+admin.site.register(Speaker, SpeakerModelAdmin)
