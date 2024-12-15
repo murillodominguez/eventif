@@ -1,18 +1,27 @@
 from django.contrib import admin
 from django.utils.timezone import now
 from contact.models import Contact
+from django.db.models.signals import post_save
+from django.core.mail import send_mail
+from django import forms
 
 class ContactModelAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone', 'message',
-                    'created_at', 'contacted_today')
-    date_hierarchy = 'created_at'
-    search_fields = ('name', 'email', 'phone', 'message', 'created_at')
+                    'sent_at', 'response', 'response_at', 'contact_answered')
+    list_editable = ['response']
+    date_hierarchy = 'sent_at'
+    search_fields = ('name', 'email', 'phone', 'message', 'response', 'response_at', 'sent_at')
+    
+    def contact_answered(self, obj):
+        return obj.response != None
 
-    def contacted_today(self, obj):
-        return obj.created_at.date() == now().date()
+    contact_answered.short_description = 'Contato respondido'
+    contact_answered.boolean = True
 
-    contacted_today.short_description = 'Contato enviado hoje?'
-    contacted_today.boolean = True
-
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
+        field = super().formfield_for_dbfield(db_field, request, **kwargs)
+        if db_field.name == "response":
+            field.widget = forms.Textarea(attrs={'name':'body', 'rows':'3', 'cols':'15'})
+        return field
 
 admin.site.register(Contact, ContactModelAdmin)
