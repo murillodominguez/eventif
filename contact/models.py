@@ -1,11 +1,10 @@
 from django.db import models
-from datetime import datetime
 from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 from django.template.loader import render_to_string
-
+from django.utils import timezone
 class Contact(models.Model):
     name = models.CharField('nome', max_length=100)
     email = models.EmailField('e-mail')
@@ -29,6 +28,8 @@ def send_new_officer_notification_email(sender, instance, **kwargs):
 
     if instance.response:
         data = {"name": instance.name, "phone": instance.phone if instance.phone else 'Não informado', "email": instance.email, "message": instance.message, "response": instance.response}
+
+        sender.objects.filter(pk=instance.pk).update(response_at=timezone.now())
 
         _send_mail(
             'contact/contact_response.txt',

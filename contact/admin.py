@@ -1,8 +1,5 @@
 from django.contrib import admin
-from django.utils.timezone import now
 from contact.models import Contact
-from django.db.models.signals import post_save
-from django.core.mail import send_mail
 from django import forms
 
 class ContactModelAdmin(admin.ModelAdmin):
