@@ -5,6 +5,7 @@ from django.dispatch import receiver
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils import timezone
+
 class Contact(models.Model):
     name = models.CharField('nome', max_length=100)
     email = models.EmailField('e-mail')
@@ -24,7 +25,7 @@ class Contact(models.Model):
         return self.name
 
 @receiver(post_save, sender=Contact)
-def send_new_officer_notification_email(sender, instance, **kwargs):
+def send_response_notification_email(sender, instance, **kwargs):
 
     if instance.response:
         data = {"name": instance.name, "phone": instance.phone if instance.phone else 'Não informado', "email": instance.email, "message": instance.message, "response": instance.response}
